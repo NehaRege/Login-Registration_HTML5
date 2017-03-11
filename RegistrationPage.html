@@ -7,15 +7,268 @@
 
 	<style>
 
+	.container {
+
+	}
+
+	.pswdInfo {
+		position: absolute;
+		display: none;
+		border: 2px solid black;
+		left: 400px;
+		top:40px;
+		box-shadow:10px 10px 5px #ccc;
+	}
+
+	#pswdInfo h4 {
+		padding: 5px;
+		background-color: black;
+		color: white;
+	}
+
+	#pswdInfo ul {
+		list-style: none;
+		list-style-image: "cross.png";
+		style="list-style: none; padding: 0 0 0 10px;"
+	}
+
+
+
+	.show {
+		display: block;
+	}
+
+	.hide {
+		display: none;
+	}
+
+	.invalid {
+		background: url(cross.png) no-repeat 0 50%;
+		padding-left: 28px;
+		padding-bottom: 8px;
+	}
+
+	.valid {
+		background: url(tick.png) no-repeat 0 50%;
+		padding-left: 28px;
+		padding-bottom: 8px;
+
+	}
+
+	
+
+
+
 
 
 	</style>
 
 	<script type="text/javascript">
 
+	function showInfo() {
+		document.getElementById("pswdInfo").classList.toggle("show");
+	}
+
+	function hideInfo() {
+		document.getElementById("pswdInfo").classList.toggle("hide");
+	}
+
+	function validatePassword() {
+
+		var pswd = document.getElementById("pswd").value;
+
+		var lowerChar = new RegExp('[a-z]');
+		var upperChar = new RegExp('[A-Z]');
+		var numericVal = new RegExp('[0-9]');
+		var specialChar = new RegExp('[!,@,#,$,%,^,&,*,_,-]');
+		var alphaChar = new RegExp('\w{4}/');
+
+		var userId = document.getElementById("userId").value;
+
+
+		if(pswd.length>=7 && pswd.length<=20) {
+			document.getElementById("length").className="valid";
+		} else {
+			document.getElementById("length").className="invalid";
+		}
+
+		if(pswd.match(lowerChar)) {
+			document.getElementById("lower").className="valid";
+		} else {
+			document.getElementById("lower").className="invalid";
+		}
+
+		if(pswd.match(upperChar)) {
+			document.getElementById("upper").className="valid";
+		} else {
+			document.getElementById("upper").className="invalid";
+		}
+
+		if(pswd.match(numericVal)) {
+			document.getElementById("number").className="valid";
+		} else {
+			document.getElementById("number").className="invalid";
+		}
+
+		if(pswd.match(specialChar)) {
+			document.getElementById("special").className="valid";
+		} else {
+			document.getElementById("special").className="invalid";
+		}
+
+		if(pswd.match(alphaChar)) {
+			document.getElementById("alpha").className="valid";
+		} else {
+			document.getElementById("alpha").className="invalid";
+		}
+
+		if(pswd != userId) {
+			document.getElementById("notSame").className="valid";
+		} else {
+			document.getElementById("notSame").className="invalid";
+		}
+
+		
+
+	}
+
+	function verifyPassword() {
+		if( (document.getElementById("pswd").value) != (document.getElementById("verifyPswd").value) ) {
+			alert('Passwords don not match!');
+			document.getElementById("pswd").focus();
+			document.getElementById("pswd").value="";
+			document.getElementById("verifyPswd").value="";
+
+		}
+	}
+
 
 	</script>
 
 </head>
+
+<body>
+
+	<div class="container">
+		<form name="regForm" class="form" method="post">
+
+			<label> User ID: </label> &nbsp; <input type="text" id="userId" autofocus>
+
+			<br><br>
+
+			<label> Password: </label> &nbsp; <input type="password" id="pswd" onFocus="showInfo()" onBlur="hideInfo()" onKeyUp="validatePassword()" min=7 max=20 required>
+
+			<br><br>
+
+		
+
+
+			</div>
+
+			<div class="pswdInfo" id="pswdInfo" onClick="hideInfo()">
+				<h4>Password must meet the following requirements:</h4>
+				<ul>
+					<li id="length" class="invalid"> Between 7-20 characters </li>
+					<li id="upper" class="invalid"> Atleast 1 upper-case letter </li>
+					<li id="lower" class="invalid"> Atleast 1 lower-case letter </li>
+					<li id="number" class="invalid"> Atleast 1 number </li>
+					<li id="special" class="invalid"> Atleast 1 special character </li>
+					<li id="alpha" class="invalid"> Atleast 4 alpha characters </li>
+					<li id="notSame" class="invalid"> Password cannot be same as user ID </li>
+				</ul>
+			</div>
+
+			<label> Verify Password: </label> &nbsp; <input type="password" id="verifyPswd" required>
+
+			<br><br>
+
+			<label> Email Address: </label> &nbsp; <input type="email" id="email" onFocus="verifyPassword()">
+
+			<br><br>
+
+			<label> Verify Email Address: </label> &nbsp; <input type="email" id="verifyEmail" required>
+
+			<br><br>
+
+			<label> Security Question 1: </label> &nbsp; 
+
+			<select id="q1">
+				<option  value="1">Sum of 2 + 3</option>
+				<option value="2">Sum of 100 + 200</option>
+				<option value="3" >23 X 100</option>
+				<option value="4">Capital of India</option>						
+				<option value="5">Capital of USA</option>
+			</select>
+
+			<br><br>
+
+			<label>Security Answer 1: </label> &nbsp; <input type="text" id="ans1">
+
+			<br><br>
+
+			<label> Security Question 2: </label> &nbsp; 
+
+			<select id="q2">
+				<option  value="1">Sum of 2 + 3</option>
+				<option value="2">Sum of 100 + 200</option>
+				<option value="3" >23 X 100</option>
+				<option value="4">Capital of India</option>						
+				<option value="5">Capital of USA</option>
+			</select>
+
+			<br><br>
+
+			<label>Security Answer 2: </label> &nbsp; <input type="text" id="ans2">
+
+			<br><br>
+
+			<label style="color:blue"> Mobile: </label> &nbsp; <input type="tel" id="mobile" required>
+
+			<br><br>
+
+			<label style="color:blue"> Address: </label> &nbsp; 
+			<textarea id="address" tabindex="2" rows="5" cols="20" autofocus></textarea>
+
+			<br><br>
+
+			<label> Areas you may be interested in, please select one or more:</label>
+			<textarea id="interest" tabindex="1" rows="5" cols="20" autofocus>	</textarea>
+
+			<br><br>
+
+			<input type="button" value="Register" id="registerButton"> &nbsp;
+			<input type="reset" value="Cancel" id="cancelButton">
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+			</label>
+
+			</label>
+
+
+		</form>
+
+	</div>
+
+
+
+
+
+
+
+
+</body>
 
 </html>
