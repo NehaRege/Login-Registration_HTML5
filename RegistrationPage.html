@@ -33,7 +33,7 @@
 
 	input {
   		width: 300px;
-}
+	}
 
 
 	.pswdInfo {
@@ -68,13 +68,13 @@
 	}
 
 	.invalid {
-		background: url(cross.png) no-repeat 0 50%;
+		background: url(invalid.png) no-repeat 0 50%;
 		padding-left: 28px;
 		padding-bottom: 8px;
 	}
 
 	.valid {
-		background: url(tick.png) no-repeat 0 50%;
+		background: url(valid.png) no-repeat 0 50%;
 		padding-left: 28px;
 		padding-bottom: 8px;
 
@@ -96,6 +96,9 @@
 	var isMobile=false;
 
 	var isAns=false;
+
+	var isAns1=false;
+	var isAns2=false;
 
 	var isQuestion=false;
 
@@ -217,9 +220,6 @@
 		}
 
 		document.getElementById("passStrength").value=strength;
-
-		
-
 	}
 
 	
@@ -334,9 +334,9 @@
 	function verifyPassword() {
 		if( (document.getElementById("pswd").value) != (document.getElementById("verifyPswd").value) ) {
 			alert('Passwords do not match!');
-			document.getElementById("pswd").focus();
-			document.getElementById("pswd").value.clear();
-			document.getElementById("verifyPswd").value.clear();
+			document.getElementById("verifyPswd").focus();
+			// document.getElementById("verifyPswd").value.clear();
+			// document.getElementById("verifyPswd").value.clear();
 
 		}
 	}
@@ -380,13 +380,37 @@
 		if(sel1 == sel2) {
 			isQuestion=false;
 			alert('Security questions cannot be the same');
-			q1.focus();
+			q2.focus();
 		} else {
 			isQuestion=true;
 		}
 	}
 
+	function checkAns1() {
+		a1=document.getElementById("ans1");
+
+		if(a1.value.length==0) {
+			isAns1=false;
+		} else {
+			isAns1=true;
+		}
+
+	}
+
+	function checkAns2() {
+		a2=document.getElementById("ans2");
+
+		if(a2.value.length==0) {
+			isAns2=false;
+		} else{
+			isAns2=true;
+		}
+
+	}
+
 	function checkAns() {
+		// checkAns1();
+		// checkAns2();
 		// verifyEmail();
 		a1=document.getElementById("ans1");
 		a2=document.getElementById("ans2");
@@ -434,6 +458,7 @@
 			localStorage.setItem("Address", document.getElementById("address").value);
 			localStorage.setItem(sel1, document.getElementById("ans1").value);
 			localStorage.setItem(sel2, document.getElementById("ans2").value);
+			localStorage.setItem("Interest", document.getElementById("interest").value);
 		} else {
 			console.log("Local Storage not supported");
 		}
@@ -444,8 +469,29 @@
 	function submitForm() {
 		saveInfo();
 
-		if(isUserId && validatePassword() && isEmail && isMobile && isAns && isQuestion) {
+		checkAns2();
+		checkAns1();
+
+		// console.log("userId = "+isUserId);
+		// console.log("pass= "+validatePassword());
+		// console.log("mob= "+isMobile);
+		// console.log("email= "+isEmail);
+		// console.log("ans1= "+isAns1);
+		// console.log("ans2= "+isAns2);
+		// console.log("ques= "+isQuestion);
+
+		var a1=document.getElementById("ans1").value;
+		var a2=document.getElementById("ans2").value;
+
+		var interest=document.getElementById("interest").value;
+
+		// console.log("l1= "+a1);
+		// console.log("l2= "+a2);
+
+
+		if(isUserId && validatePassword() && isEmail && isMobile && isQuestion && a1.length!=0 && a2.length!=0 && interest.length!=0) {
 			alert('Success!!!!');
+			
 		} else {
 			alert('Registration failed!!!!');
 			document.getElementById("userId").focus();
@@ -459,7 +505,7 @@
 	function reload() {
 		document.getElementById("passStrength").value=0;
 		document.getElementById("userId").focus();
-		window.href = RegistrationPage.html;
+		window.href = "RegistrationPage.html";
 
 
 	}
@@ -475,7 +521,7 @@
 		<form name="regForm" class="form" method="post">
 
 			<div class="topDesign"> 
-				<h2 style="background:url(icon.png) no-repeat;padding-left:30px"> Registration Form </h2>
+				<h2 style="background:url(registration_icon.png) no-repeat;padding-left:30px"> Registration Form </h2>
 		___________________________________________________________________________________________________________________________________________________
 
 			</div>
@@ -523,11 +569,11 @@
 			<label> Security Question 1: </label> &nbsp; 
 
 			<select id="q1">
-				<option  value="1">Sum of 2 + 3</option>
-				<option value="2">Sum of 100 + 200</option>
-				<option value="3" >23 X 100</option>
-				<option value="4">Capital of India</option>				
-				<option value="5">Capital of USA</option>
+				<option  value="1">First pet name?</option>
+				<option value="2">City you were born in?</option>
+				<option value="3">Favourite color?</option>
+				<option value="4">Name of your first car?</option>		
+				<option value="5">In what year was your father born?</option>
 			</select>
 
 			<br><br>
@@ -539,11 +585,11 @@
 			<label> Security Question 2: </label> &nbsp; 
 
 			<select id="q2">
-				<option  value="1">Sum of 2 + 3</option>
-				<option value="2">Sum of 100 + 200</option>
-				<option value="3" >23 X 100</option>
-				<option value="4">Capital of India</option>						
-				<option value="5">Capital of USA</option>
+				<option  value="1">First pet name?</option>
+				<option value="2">City you were born in?</option>
+				<option value="3">Favourite color?</option>
+				<option value="4">Name of your first car?</option>		
+				<option value="5">In what year was your father born?</option>
 			</select>
 
 			<br><br>
